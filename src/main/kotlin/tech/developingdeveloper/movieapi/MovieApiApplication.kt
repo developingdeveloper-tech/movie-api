@@ -16,15 +16,3 @@ class MovieApiApplication {
 fun main(args: Array<String>) {
 	runApplication<MovieApiApplication>(*args)
 }
-
-
-
-
-
-
-
-
-
-
-
-
