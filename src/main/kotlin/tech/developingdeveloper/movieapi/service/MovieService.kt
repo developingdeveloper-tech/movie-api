@@ -16,4 +16,6 @@ interface MovieService {
     fun getMovie(id: Int): MovieDTO
 
     fun updateMovie(movieDTO: MovieDTO): MovieDTO
+
+    fun deleteMovie(id: Int)
 }
