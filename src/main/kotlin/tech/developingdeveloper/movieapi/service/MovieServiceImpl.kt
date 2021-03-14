@@ -13,7 +13,7 @@ class MovieServiceImpl(
 ) : MovieService {
     override fun createMovie(movieDTO: MovieDTO): MovieDTO {
 
-        if(movieDTO.id != -1)
+        if (movieDTO.id != -1)
             throw MovieException("Id must be null or -1.")
 
         // with movie id = 25
@@ -34,7 +34,20 @@ class MovieServiceImpl(
 
     override fun getMovie(id: Int): MovieDTO {
         val optionalMovie = movieRepository.findById(id)
-        val movie = optionalMovie.orElseThrow{ MovieException("Movie with id $id is not present") }
+        val movie = optionalMovie.orElseThrow { MovieException("Movie with id $id is not present") }
         return movieMapper.fromEntity(movie)
+    }
+
+    override fun updateMovie(movieDTO: MovieDTO): MovieDTO {
+        val exists = movieRepository.existsById(movieDTO.id)
+
+        if (!exists)
+            throw MovieException("Movie with id ${movieDTO.id} is not present")
+
+        if(movieDTO.rating == 0.0 || movieDTO.name == "Default movie")
+            throw MovieException("Complete movie object is expected")
+
+        movieRepository.save(movieMapper.toEntity(movieDTO))
+        return movieDTO
     }
 }
