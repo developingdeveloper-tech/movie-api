@@ -2,9 +2,7 @@ package tech.developingdeveloper.movieapi.web.rest
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import tech.developingdeveloper.movieapi.dto.MovieDTO
 import tech.developingdeveloper.movieapi.service.MovieService
 
@@ -22,4 +20,12 @@ class MovieResource(
     fun createMovie(@RequestBody movieDTO: MovieDTO): ResponseEntity<MovieDTO> {
         return ResponseEntity(movieService.createMovie(movieDTO), HttpStatus.CREATED)
     }
+
+    @GetMapping
+    fun getMovies(): ResponseEntity<List<MovieDTO>> =
+        ResponseEntity.ok(movieService.getMovies())
+
+    @GetMapping("/{id}")
+    fun getMovie(@PathVariable id: Int) =
+        ResponseEntity.ok(movieService.getMovie(id))
 }
